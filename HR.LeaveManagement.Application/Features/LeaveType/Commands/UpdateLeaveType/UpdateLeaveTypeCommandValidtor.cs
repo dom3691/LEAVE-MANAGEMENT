@@ -15,8 +15,11 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.UpdateLeave
         public UpdateLeaveTypeCommandValidtor(ILeaveTypeRepository leaveTypeRepository)
         {
             RuleFor(p => p.Name)
-                .MaximumLength(100).WithMessage("Maximum Lenght of Name should be 100")
-                .
+                .NotNull()
+                .WithMessage("{PropertyName} is required")
+                .MaximumLength(100)
+                .WithMessage("Maximum Lenght of Name should be 100");
+                
 
             this._leaveTypeRepository = leaveTypeRepository;
         }
