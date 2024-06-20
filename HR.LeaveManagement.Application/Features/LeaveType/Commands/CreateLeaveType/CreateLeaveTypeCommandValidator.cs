@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HR.LeaveManagement.Application.Contracts.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,9 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
 {
     public class CreateLeaveTypeCommandValidator : AbstractValidator<CreateLeaveTypeCommand>
     {
-        public CreateLeaveTypeCommandValidator()
+        private readonly ILeaveTypeRepository _leaveTypeRepository;
+
+        public CreateLeaveTypeCommandValidator(ILeaveTypeRepository leaveTypeRepository)
         {
             RuleFor(p => p.Name)
                 .NotEmpty().WithMessage("{PropertyName} is Required")
@@ -17,8 +20,18 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
                 .MaximumLength(70).WithMessage("{PropertyName} must not be more than 70 characters");
 
             RuleFor(p => p.DefaultDays)
-                .GreaterThan(100).WithMessage("{PropertyName} Cannot exceed 100")
-                .LessThan(70).WithMessage("{PropertyName} cannot be less than 1");
+                .LessThan(100).WithMessage("{PropertyName} Cannot exceed 100")
+                .GreaterThan(1).WithMessage("{PropertyName} cannot be less than 1");
+
+            RuleFor(q => q)
+               .MustAsync(LeaveTypeNameUnique)
+               .WithMessage("Leave type already exists");
+            this._leaveTypeRepository = leaveTypeRepository;
+        }
+
+        private async Task<bool> LeaveTypeNameUnique(CreateLeaveTypeCommand command, CancellationToken token)
+        {
+            return await _leaveTypeRepository.IsLeaveTypeUnique(command.Name);
         }
     }
 }
