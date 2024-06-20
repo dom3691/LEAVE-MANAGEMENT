@@ -25,16 +25,6 @@ namespace HR.LeaveManagement.Persistence.DatabaseContext
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HrDatabaseContext).Assembly);
 
-            modelBuilder.Entity<LeaveType>().HasData(
-
-                new LeaveType
-                {
-                    Id = 1,
-                    Name = "Vacation",
-                    DefaultDays = 10,
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now
-                });    
             base.OnModelCreating(modelBuilder);
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
