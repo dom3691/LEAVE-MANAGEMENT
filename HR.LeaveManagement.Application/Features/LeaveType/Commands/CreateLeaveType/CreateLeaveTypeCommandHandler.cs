@@ -29,7 +29,6 @@ namespace HR.LeaveManagement.Application.Features.LeaveType.Commands.CreateLeave
 
             if (validationResult.Errors.Any())
                 throw new BadRequestException("Invalid LeaveType", validationResult);
-            
 
             //convert to domain entity object 
             var leaveTypeToCreate = _mapper.Map<Domain.LeaveType>(request);
