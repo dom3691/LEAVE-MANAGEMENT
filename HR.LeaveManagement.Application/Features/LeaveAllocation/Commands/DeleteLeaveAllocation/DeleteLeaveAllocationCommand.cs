@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HR.LeaveManagement.Application.Features.LeaveAllocation.Commands.DeleteLeaveAllocation
 {
-    public class DeleteLeaveTypeCommandRequest : IRequest
+    public class DeleteLeaveAllocationCommand : IRequest
     {
         public int Id { get; set; }
     }

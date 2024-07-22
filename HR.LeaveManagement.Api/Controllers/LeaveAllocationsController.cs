@@ -44,7 +44,7 @@ namespace HR.LeaveManagement.Api.Controllers
         public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand leaveAllocation)
         {
             var response = await _mediator.Send(leaveAllocation);
-            return Ok(response);
+            return CreatedAtAction(nameof(Get), new { id = response });
         }
 
         // PUT api/<LeaveAllocationsController>/5
@@ -53,7 +53,7 @@ namespace HR.LeaveManagement.Api.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Put(int id, [FromBody] UpdateLeaveAllocationCommand leaveAllocation)
+        public async Task<ActionResult> Put(UpdateLeaveAllocationCommand leaveAllocation)
         {
             await _mediator.Send(leaveAllocation);
             return NoContent();
@@ -67,7 +67,8 @@ namespace HR.LeaveManagement.Api.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> Delete(int id)
         {
-            await _mediator.Send(new DeleteLeaveTypeCommandRequest { Id = id });
+            var command = new DeleteLeaveAllocationCommand { Id = id };
+            await _mediator.Send(command);
             return NoContent();
         }
     }
