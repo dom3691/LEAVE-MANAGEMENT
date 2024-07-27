@@ -23,7 +23,7 @@ namespace HR.LeaveManagement.Infrastructure.EmailService
                 Name = _emailSettings.FromName
             };
 
-            var message = MailHelper.CreateSingleEmail(from, to, email.subject, email.Body, email.Body);
+            var message = MailHelper.CreateSingleEmail(from, to, email.Subject, email.Body, email.Body);
 
             var response = await client.SendEmailAsync(message);
 
