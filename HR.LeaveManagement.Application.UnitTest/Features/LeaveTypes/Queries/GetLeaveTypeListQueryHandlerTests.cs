@@ -33,8 +33,6 @@ namespace HR.LeaveManagement.Application.UnitTest.Features.LeaveTypes.Queries
             var handler = new GetLeaveTypesQueryHandler(_mapper, _mockRepo.Object, _mockAppLogger.Object);
             var result = await handler.Handle(new GetLeaveTypesQuery(), CancellationToken.None);
 
-
-
             result.ShouldBeOfType<List<LeaveTypeDto>>();
             result.Count.ShouldBe(3);
 
